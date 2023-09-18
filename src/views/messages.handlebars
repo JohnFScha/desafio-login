@@ -1,0 +1,13 @@
+<h1>Chat</h1>
+
+<form class="chat">
+	<input type='text' name='' id='chatBox' />
+	<button id='botonChat'>Send</button>
+</form>
+<section class="messages">
+	<div class='parrafosMensajes'>
+	{{#each messages}}
+		<p class="message"><i>{{this.email}} said</i>: <b>{{this.message}}</b></p>
+	{{/each}}
+	</div>
+</section>
