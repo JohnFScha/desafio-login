@@ -1,0 +1,19 @@
+<div class="message-container">
+    {{#if message}}
+    <p>{{message}}</p>
+    {{/if}}
+</div>
+<div class="products-container">
+    {{#if products}}
+    {{#each products}}
+    <article id="product">
+        <ul>
+            <li class="title">{{this.title}}</li>
+            <li class="description">{{this.description}}</li>
+            <li class="price">{{this.price}}</li>
+            <li class="description">{{this.quantity}}</li>
+        </ul>
+    </article>
+    {{/each}}
+    {{/if}}
+</div>

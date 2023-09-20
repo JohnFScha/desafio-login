@@ -30,7 +30,7 @@ mongoose.connect(process.env.MONGO_DB)
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.engine('handlebars', engine());
+app.engine('handlebars', engine({}));
 app.set('view engine', 'handlebars');
 app.set('views', path.resolve(__dirname, './views'));
 app.use(session({
@@ -43,18 +43,22 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+app.use((req, res, next) => {
+    if (req.session.user) {
+        const user = req.session.user;
+        res.locals.welcomeMessage = `Welcome, ${user.first_name} ${user.last_name}!`;
+    }
+    next();
+});
+
 
 // Socket
 const io = new Server(httpServer);
 
-io.on('connection', async (socket) => {
+io.on('connection', (socket) => {
     console.log('Conexión con Socket.io');
 
-    const products = await productModel.find();
-    socket.emit('products', products);
-
     socket.on('add-to-cart', async (productData) => {
-        console.log(productData)
         let cart = await cartsModel.findOne({ _id: "64f8fbb6d998a951bcb2774e" })
         if (!cart) {
             cart = await cartsModel.create({ products: [] })
@@ -72,27 +76,56 @@ io.on('connection', async (socket) => {
     socket.on('login', async (newUser) => {
         const user = await userModel.findOne({email: newUser.email})
 
-        console.log(user)
-
         if (user) {
             socket.emit('user', user)
         }
     })
-});
+}); 
 
 // Routes
+app.use('/api/users', userRouter);
+app.use('/api/session', sessionRouter)
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartsRouter)
 app.use('/api/messages', messageRouter)
-app.use('/api/session', sessionRouter)
-app.use('/api/users', userRouter);
 
 // // Serve static files from the "public" folder
 app.use('/static', express.static(path.join(__dirname, '/public')));
 
+app.get('/static/login', async (req, res) => {
+    res.render('login', {
+        pathJS: 'login',
+        pathCSS: 'login'
+    })
+})
+
+app.get('/static/productsViews', async (req, res) => {
+    const cart = await cartsModel.findOne({_id: '64f8fbb6d998a951bcb2774e'})
+
+    const cleanData = {
+        products: cart.products.map(product => ({
+            title: product.id_prod.title,
+            description: product.id_prod.description,
+            price: product.id_prod.price,
+            quantity: product.quantity
+        }))
+    }
+
+    if(cart){
+        const message = res.locals.welcomeMessage
+
+        res.render('productsViews', {
+            message: message,
+            products: cleanData.products,
+            pathJS: 'productsViews',
+            pathCSS: 'productsViews'  
+        })
+    }
+})
+
 app.get('/static/products', async (req, res) => {
     const products = await productModel.find()
-
+    
     const cleanData = {
         products: products.map(product => ({
             title: product.title,
@@ -110,10 +143,3 @@ app.get('/static/products', async (req, res) => {
         pathJS: 'products'
     });
 });
-
-app.get('/static/login', async (req, res) => {
-    res.render('login', {
-        pathJS: 'login',
-        pathCSS: 'login'
-    })
-})

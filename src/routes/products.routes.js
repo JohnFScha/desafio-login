@@ -1,5 +1,6 @@
 import { Router } from "express";
 import productModel from "../models/products.models.js";
+import userModel from "../models/user.models.js";
 
 const productRouter = Router({ caseSensitive: false });
 
@@ -39,10 +40,19 @@ productRouter.get("/", async (req, res) => {
       page: pageNumber,
       limit: limitNumber,
       sort: sortObject
-    };
-
+    }; 
+ 
     const products = await productModel.paginate(filterObject, options);
-    res.status(200).send({ status: "success", message: products });
+    if (req.session.login === true) {
+
+      // Get user from the user model
+      const user = await userModel.findById(req.session.user._id);
+
+      // Send welcome message with user's first name
+      res.status(200).send({ status: "success", message: `Welcome ${user.first_name} ${user.last_name}!`, products });
+    } else {
+      res.status(200).send({ status: "success", message: products });
+    }
   } catch (error) {
     res.status(400).send({ status: `Error checking for products: ${error}` });
   }

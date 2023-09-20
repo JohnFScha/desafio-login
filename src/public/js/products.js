@@ -1,6 +1,7 @@
 const socket = io()
 
 const addToCartButtons = document.querySelectorAll(".addToCart");
+const articleContainer = document.getElementById("article-container")
 
 Array.from(addToCartButtons).forEach((button) => {
   button.addEventListener('click', () => {
@@ -13,7 +14,7 @@ Array.from(addToCartButtons).forEach((button) => {
       stock: product.querySelector('.stock').innerText,
       _id: product.querySelector(".id").innerText
     };
-    
+
     Swal.fire({
       title: 'Product added successfuly!',
       icon: 'success'
@@ -23,13 +24,3 @@ Array.from(addToCartButtons).forEach((button) => {
 
   });
 });
-
-socket.on('user', (user) => {
-
-  console.log(user)
-
-  Swal.fire({
-    title: `Welcome ${user.first_name} ${user.last_name}!`,
-    icon: 'success'
-  })
-})
