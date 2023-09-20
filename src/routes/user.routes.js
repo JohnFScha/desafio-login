@@ -34,7 +34,7 @@ userRouter.post('/', async (req, res) => {
 
 		if (newUser) {
 			req.session.user = newUser
-			res.status(200).send({success: 'User created.'})
+			res.redirect('/static/login')
 		} else {
 			res.status(403).send({message: 'forbidden.'})
 		}
