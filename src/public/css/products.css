@@ -1,8 +1,8 @@
 section {
     display: flex;
     flex-direction: column;
-    width: 66%;
-    padding: 1.5rem;
+    width: 50%;
+    padding: 1rem;
     margin: auto;
     align-items: center;
     background: #0102A2;
@@ -18,7 +18,7 @@ section {
     > div.article-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 5rem;
+        gap: 3rem;
         justify-items: center;
 
         > article {

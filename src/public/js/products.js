@@ -23,3 +23,13 @@ Array.from(addToCartButtons).forEach((button) => {
 
   });
 });
+
+socket.on('user', (user) => {
+
+  console.log(user)
+
+  Swal.fire({
+    title: `Welcome ${user.first_name} ${user.last_name}!`,
+    icon: 'success'
+  })
+})

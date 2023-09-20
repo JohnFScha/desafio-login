@@ -1,0 +1,19 @@
+form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: flex-start;
+
+    > label {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        margin: auto;
+    }
+
+    > button {
+        width: 15%;
+        margin: auto;
+        margin-top: 10px;
+    }
+}

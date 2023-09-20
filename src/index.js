@@ -14,6 +14,7 @@ import sessionRouter from './routes/session.routes.js';
 import userRouter from './routes/user.routes.js';
 import productModel from './models/products.models.js';
 import cartsModel from './models/carts.models.js';
+import userModel from './models/user.models.js';
 
 const app = express();
 const PORT = 4000;
@@ -63,11 +64,28 @@ io.on('connection', async (socket) => {
             product: productData._id,
             quantity: 1
         })
-
+ 
         await cart.save()
         console.log('Product added to cart:', productData)
     })
+
+    socket.on('login', async (newUser) => {
+        const user = await userModel.findOne({email: newUser.email})
+
+        console.log(user)
+
+        if (user) {
+            socket.emit('user', user)
+        }
+    })
 });
+
+// Routes
+app.use('/api/products', productRouter);
+app.use('/api/carts', cartsRouter)
+app.use('/api/messages', messageRouter)
+app.use('/api/session', sessionRouter)
+app.use('/api/users', userRouter);
 
 // // Serve static files from the "public" folder
 app.use('/static', express.static(path.join(__dirname, '/public')));
@@ -88,19 +106,14 @@ app.get('/static/products', async (req, res) => {
 
     res.render('products', {
         products: cleanData.products,
-        pathCSS: 'productPs',
+        pathCSS: 'products',
         pathJS: 'products'
     });
 });
 
 app.get('/static/login', async (req, res) => {
-    res.render('login')
+    res.render('login', {
+        pathJS: 'login',
+        pathCSS: 'login'
+    })
 })
-
-
-// Routes
-app.use('/api/products', productRouter);
-app.use('/api/carts', cartsRouter)
-app.use('/api/messages', messageRouter)
-app.use('/api/session', sessionRouter)
-app.use('/api/users', userRouter);
