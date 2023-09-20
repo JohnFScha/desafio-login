@@ -92,6 +92,14 @@ app.use('/api/messages', messageRouter)
 // // Serve static files from the "public" folder
 app.use('/static', express.static(path.join(__dirname, '/public')));
 
+app.get('/static/register', async (req, res) => {
+
+    res.render('register', {
+        pathJS: 'register',
+        pathCSS: 'register'
+    })
+})
+
 app.get('/static/login', async (req, res) => {
     res.render('login', {
         pathJS: 'login',
