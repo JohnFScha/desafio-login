@@ -1,19 +1,37 @@
-form {
-    display: flex;
-    flex-direction: column;
+section {
+    background-color: fuchsia;
+    border-radius: 1rem;
+    border: 2px solid rgb(2, 7, 139);
+    width: 50%;
     margin: auto;
-    text-align: flex-start;
+    padding: 1rem;
 
-    > label {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-        margin: auto;
+    > h2 {
+        text-align: center;
     }
 
-    > button {
-        width: 15%;
-        margin: auto;
-        margin-top: 10px;
+    > form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        > label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            > input {
+                padding: 10px;
+                border-radius: 0.5rem;
+            }
+        }
+    
+        > button {
+            width: 15%;
+            margin: auto;
+            margin-top: 10px;
+            padding: 0.8rem;
+            border-radius: 0.5rem;
+        }
     }
 }

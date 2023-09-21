@@ -14,7 +14,7 @@ Array.from(addToCartButtons).forEach((button) => {
       stock: product.querySelector('.stock').innerText,
       _id: product.querySelector(".id").innerText
     };
-
+    
     Swal.fire({
       title: 'Product added successfuly!',
       icon: 'success'

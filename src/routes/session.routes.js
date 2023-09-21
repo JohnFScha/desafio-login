@@ -1,25 +1,37 @@
 import { Router } from "express";
 import userModel from "../models/user.models.js";
+import cartsModel from "../models/carts.models.js"
 
 const sessionRouter = Router({caseSensitive: false});
 
 sessionRouter.post('/login', async (req, res) => {
     const { email, password } = req.body
-
+    
     try {
         const user = await userModel.findOne({email: email})
-        
-        if(req.session.login) {
+        const cart = await cartsModel.findOne({active: true});
+        console.log(cart)
+
+        if (req.session.login && cart.products.length === 0) {
+            req.session.user = user
+            res.redirect('/static/products')
+        } else if (req.session.login) {
             req.session.user = user
             res.redirect('/static/productsViews')
         }
-
+ 
         if(user) {
             if (user.password === password) {
                 // login
                 req.session.login =true
                 req.session.user = user
-                res.redirect('/static/productsViews')
+
+                if(cart.products.length === 0) {
+                    res.redirect('/static/products')
+                } else {
+                    
+                    res.redirect('/static/productsViews')    
+                }
             } else {
                 res.status(401).send({error: 'Invalid password.'})
             }

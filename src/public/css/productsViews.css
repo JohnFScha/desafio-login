@@ -1,0 +1,32 @@
+div.message-container {
+    background-color: fuchsia;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    width: 25%;
+    margin: auto;
+    text-align: center;
+    border: 1px solid black;
+    margin-bottom: 5px;
+}
+
+h2 {
+    text-align: center;
+}
+
+div.products-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    background-color: fuchsia;
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 50%;
+    margin: auto;
+    border: 1px solid black;
+
+    > article {
+        border: 1px solid black;
+        border-radius: 1rem;
+        background-color: beige;
+    }
+}

@@ -19,6 +19,10 @@ const cartSchema = new Schema({
       return [];
     },
   },
+  active: {
+    type: Boolean,
+    default: false
+  }
 });
 
 cartSchema.pre('findOne', function() {

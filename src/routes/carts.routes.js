@@ -36,7 +36,7 @@ cartsRouter.get("/:cid", async (req, res) => {
 cartsRouter.post("/", async (req, res) => {
   
   try {
-    const respuesta = await cartsModel.create({});
+    const respuesta = await cartsModel.create({active: true});
     res.status(200).send({ resultado: "OK", message: respuesta });
   } catch (error) {
     res.status(400).send({ error: `Error al crear producto: ${error}` });

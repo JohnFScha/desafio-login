@@ -33,8 +33,14 @@ userRouter.post('/', async (req, res) => {
 		})
 
 		if (newUser) {
-			req.session.user = newUser
-			res.redirect('/static/login')
+			if	(newUser.email === 'adminCoder@coder.com' && newUser.password === 'ADMIN4862') {
+				newUser.rol = 'admin'
+				req.session.user = newUser
+				res.redirect('/static/login')	
+			} else {
+				req.session.user = newUser
+				res.redirect('/static/login')
+			}
 		} else {
 			res.status(403).send({message: 'forbidden.'})
 		}

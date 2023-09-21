@@ -1,0 +1,37 @@
+section {
+    background-color: fuchsia;
+    border-radius: 1rem;
+    border: 2px solid rgb(2, 7, 139);
+    width: 50%;
+    margin: auto;
+    padding: 1rem;
+
+    > h2 {
+        text-align: center;
+    }
+
+    > form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        > label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            > input {
+                padding: 10px;
+                border-radius: 0.5rem;
+            }
+        }
+    
+        > button {
+            width: 20%;
+            margin: auto;
+            margin-top: 10px;
+            padding: 0.8rem;
+            border-radius: 0.5rem;
+        }
+    }
+}
