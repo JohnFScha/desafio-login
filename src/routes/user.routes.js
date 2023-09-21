@@ -35,9 +35,12 @@ userRouter.post('/', async (req, res) => {
 		if (newUser) {
 			if	(newUser.email === 'adminCoder@coder.com' && newUser.password === 'ADMIN4862') {
 				newUser.rol = 'admin'
+				await newUser.save();
 				req.session.user = newUser
 				res.redirect('/static/login')	
 			} else {
+				newUser.rol = 'usuario'
+				await newUser.save();
 				req.session.user = newUser
 				res.redirect('/static/login')
 			}

@@ -33,7 +33,6 @@ viewsRouter.get('/productsViews', async (req, res) => {
 
     if (cart) {
         const message = res.locals.welcomeMessage;
-        console.log(message)
         res.render('productsViews', {
             message: message,
             products: cleanData.products,

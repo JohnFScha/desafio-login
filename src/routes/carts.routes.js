@@ -117,9 +117,7 @@ cartsRouter.put("/:cid/products/:pid", async (req, res) => {
   const { quantity } = req.body;
   try {
     const cart = await cartsModel.findOne({_id: cid});
-    console.log(cart)
     const product = cart.products.find(prod => prod.id_prod._id.toString() === pid)
-    console.log(product)
 
     if(!product) {
       res.status(404).send('Not found')

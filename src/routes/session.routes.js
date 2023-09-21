@@ -10,7 +10,6 @@ sessionRouter.post('/login', async (req, res) => {
     try {
         const user = await userModel.findOne({email: email})
         const cart = await cartsModel.findOne({active: true});
-        console.log(cart)
 
         if (req.session.login && cart.products.length === 0) {
             req.session.user = user
