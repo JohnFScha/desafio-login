@@ -52,4 +52,19 @@ userRouter.post('/', async (req, res) => {
 	}
 })
 
+userRouter.delete('/', async (req, res) => {
+	const { email } = req.params;
+	const updatedUsers = await userModel.findOneAndDelete({email});
+
+	try {
+		if(updatedUsers) {
+			res.status(200).send({message: 'User deleted successfully'})
+		} else {
+			res.status(404).send({error: 'User not found'})
+		}
+	} catch (error) {
+		res.status(500).send({error: `Internal server error: ${error}`})
+	}
+})
+
 export default userRouter;

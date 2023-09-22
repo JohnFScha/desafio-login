@@ -48,7 +48,11 @@ app.use((req, res, next) => { // Middleware para chequear datos de sesion
     if (req.session.user) {
         // En caso de que exista un usario en la sesion actual, se devuelve un mensaje personalizado para usarse en otras rutas.
         const user = req.session.user;
-        res.locals.welcomeMessage = `Welcome, ${user.first_name} ${user.last_name}!`;
+        if(user.rol === 'admin') {
+            res.locals.welcomeMessage = `Welcome, ${user.first_name} ${user.last_name}! You are admin!`;
+        } else {
+            res.locals.welcomeMessage = `Welcome, ${user.first_name} ${user.last_name}!`;
+        }
     }
     next();
 });

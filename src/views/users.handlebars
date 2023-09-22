@@ -1,0 +1,17 @@
+<section>
+    <h2>Registered Users:</h2>
+    {{#if users}}
+    {{#each users}}
+    <article>
+        <form method="post" action="http://localhost:4000/api/users">
+        <input type="hidden" name="_method" value="DELETE">
+        <h3>Name: {{this.first_name}} {{this.last_name}}</h3>
+        <p>Age: {{this.age}}</p>
+        <p>Email: {{this.email}}</p>
+        <p>Rol: {{this.rol}}</p>
+            <button type="submit">Delete user</button>
+        </form>
+    </article>
+    {{/each}}
+    {{/if}}
+</section>
